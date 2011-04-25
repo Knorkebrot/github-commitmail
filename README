@@ -1,0 +1,44 @@
+github commitmail
+=================
+
+This little Perl script gives you the missing feature of a commit mail on
+github. Well, at least I was missing it ;)
+
+
+CPAN dependencies
+-----------------
+
+JSON
+Mail::Send
+LWP::UserAgent
+
+
+installation
+-----------------
+
+To install please use a bsd'ish make. you may need to install it on a linux
+machine. FreeBSD just 'make', OSX 'bsdmake' and on my Debian box I needed to
+install the package 'freebsd-buildutils' to get 'freebsd-make'.
+You will need to have PREFIX set, whitch is the part in front of '/bin' and
+'/etc'.
+
+targets:
+	install
+	uninstall
+
+
+configuration
+-----------------
+
+See $PREFIX/etc/github-commitmail.conf.sample for examples
+
+
+usage
+-----------------
+
+Write a crontab entry for the script ;)
+Write something into your config file and start the script without any
+arguments.
+
+
+<bo@kbct.de>

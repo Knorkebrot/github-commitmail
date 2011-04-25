@@ -1,0 +1,11 @@
+# github-commitmail config
+#
+# syntax:
+#
+# setting the from address:
+# from: user@example.com
+#
+# sprecify repos:
+# <repo owner>/<repo name>: mail@address.com user@example.com
+# example:
+# Knorkebrot/github-commitmail: user@example.com
