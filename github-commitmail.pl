@@ -30,6 +30,8 @@ close(STATE);
 my %states;
 foreach (@statelist) {
 	my ($key, $value) = split(':', $_);
+	$value =~ s/^\s*//;
+	$value =~ s/\s*$//;
 	$states{$key} = $value;
 }
 
@@ -61,6 +63,7 @@ sub processRepo
 	my $repo = shift;
 	my @users = shift;
 
+	# TODO: Oldest commits first...
 	foreach (getCommitlist($repo, $states{$repo}, 1, $ua)) {
 		my $commit = decode_json(
 			get($ua, 'http://github.com/api/v2/json/commits/show/' . $repo . '/' . $_)
@@ -146,8 +149,7 @@ sub getCommitlist
 	}
 	my @todo;
 	foreach (@{$list->{'commits'}}) {
-		# XXX: using regexp is debug
-		return @todo if ($last && $_->{'id'} =~ /^$last/);
+		return @todo if ($last && $_->{'id'} eq $last);
 		push(@todo, $_->{'id'});
 		return @todo if (!$last);
 	}
