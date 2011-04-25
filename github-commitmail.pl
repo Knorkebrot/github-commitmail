@@ -38,12 +38,12 @@ foreach (@statelist) {
 
 open(CONF, '<', $CONF);
 foreach (<CONF>) {
-	next if($_ =~ /^#/);	# comments
+	next if($_ =~ /^\s*$/ || $_ =~ /^#/);	# comments and empty lines
 	if($_ =~ /^from:\s*(.*)$/) {
 		$FROM = $1;
 		next;
 	}
-	die "Malformed config file: " . $CONF unless ($_ =~ /^([\w\/\-]+):\s*([\w\-@ .]+)$/);
+	die "Malformed config line: " . $_ unless ($_ =~ /^([\w\/\-]+):\s*([\w\-@ .]+)$/);
 	processRepo($1, split(/\s+/, $2));
 }
 close(CONF);
@@ -124,7 +124,7 @@ sub processRepo
 		foreach (@users) {
 			my $mail = Mail::Send->new;
 			$mail->subject($subject);
-			$mail->from('github@kbct.de');
+			$mail->set('From', 'github@kbct.de');
 			$mail->to($_);
 
 			my $fh = $mail->open;
@@ -155,9 +155,9 @@ sub getCommitlist
 	my @todo;
 	foreach (@{$list->{'commits'}}) {
 		# XXX: using regexp is debug
-		return @todo if ($_->{'id'} =~ /^$last/);
+		return @todo if ($last && $_->{'id'} =~ /^$last/);
 		push(@todo, $_->{'id'});
-		return @todo if (! defined($last));
+		return @todo if (!$last);
 	}
 	return (@todo, getCommitlist($repo, $last, $page + 1));
 }
@@ -179,6 +179,7 @@ sub getDir
 sub getDirStr
 {
 	my %dirs = shift;
+	return '' if (!%dirs);
 	my $position = -1;
 	my $parent = '';
 	foreach (keys(%dirs)) {
