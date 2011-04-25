@@ -46,14 +46,8 @@ foreach (<CONF>) {
 close(CONF);
 
 open(STATE, '>', $STATE);
-my $first = 1;
 while (my ($repo, $id) = each(%states)) {
-	print STATE $repo . ':' . $id;
-	if ($first) {
-		$first = 0;
-		next;
-	}
-	print STATE "\n";
+	print STATE $repo, ':', $id, "\n";
 }
 close(STATE);
 
@@ -116,7 +110,8 @@ sub processRepo
 			$text .= "\n" . $diff;
 		}
 
-		$subject .= getDirStr(\%dirs);
+		my $dirstr = getDirStr(\%dirs);
+		$subject .= ' - ' . $dirstr if ($dirstr ne '');
 
 		foreach (@users) {
 			my $mail = Mail::Send->new;
@@ -186,6 +181,9 @@ sub getDirStr
 			next;
 		}
 		my $break = 0;
+		# XXX:
+		# This is bullshit. I need to split the path
+		# at '/' and test for the particular pieces.
 		for (my $i = 0; $i < length($parent); $i++) {
 			if (substr($parent, $i, 1) ne substr($_, $i, 1)) {
 				$position = $i;
