@@ -8,13 +8,10 @@ use strict;
 use JSON;
 use Mail::Send;
 use LWP::UserAgent;
-use Data::Dumper;
 
 my $CONF = '/usr/local/etc/github-commitmail.conf';
 my $STATE = '/var/tmp/github-commitmail';
 my $FROM = '';
-
-#print "dumper: " . Dumper(getCommitlist('noqqe/statistical/master', '3ab48635dd2bef50aeb0', 1, $ua));
 
 die 'No config found: ' . $CONF if (! -f $CONF);
 
