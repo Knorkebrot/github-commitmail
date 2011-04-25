@@ -36,9 +36,10 @@ See $PREFIX/etc/github-commitmail.conf.sample for examples
 usage
 -----------------
 
-Write a crontab entry for the script ;)
 Write something into your config file and start the script without any
 arguments.
-
+I suggest to put this into a crontab file like this:
+0-59/5 * * * * /usr/bin/perl /usr/local/bin/github-commitmail
+(Execute every five minutes)
 
 <bo@kbct.de>
