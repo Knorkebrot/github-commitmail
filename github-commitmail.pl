@@ -85,7 +85,7 @@ sub processRepo
 		$text .= 'Id: ' . $commit->{'id'} . "\n";
 		$text .= "\n";
 
-		my %dirs;
+		my %dirs = ();
 		if ($commit->{'added'}) {
 			# TODO
 			# The API call doesn't deliver a diff for new files. That sucks.
@@ -108,7 +108,7 @@ sub processRepo
 			foreach (@{$commit->{'modified'}}) {
 				$text .= '  ' . $_->{'filename'};
 				$diff .= "\n\nModified: " . $_->{'filename'} . "\n" .
-					'===================================================================' .
+					"===================================================================\n" .
 					$_->{'diff'};
 				getDir(\%dirs, $_);
 			}
