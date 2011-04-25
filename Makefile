@@ -5,7 +5,7 @@
 DISTNAME=	github-commitmail
 
 .ifndef PREFIX
-.	error "PREFIX needs to be set. E.g. /usr/local/"
+.	error "PREFIX needs to be set. E.g. /usr/local"
 .endif
 
 install:
