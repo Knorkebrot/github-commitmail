@@ -63,8 +63,7 @@ sub processRepo
 	my $repo = shift;
 	my @users = shift;
 
-	# TODO: Oldest commits first...
-	foreach (getCommitlist($repo, $states{$repo}, 1, $ua)) {
+	foreach (reverse getCommitlist($repo, $states{$repo}, 1, $ua)) {
 		my $commit = decode_json(
 			get($ua, 'http://github.com/api/v2/json/commits/show/' . $repo . '/' . $_)
 		)->{'commit'};
