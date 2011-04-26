@@ -37,7 +37,7 @@ foreach (@statelist) {
 
 open(CONF, '<', $CONF);
 foreach (<CONF>) {
-	next if($_ =~ /^\s*$/ || $_ =~ /^#/);	# comments and empty lines
+	next if ($_ =~ /^\s*$/ || $_ =~ /^#/);	# comments and empty lines
 	if($_ =~ /^from:\s*(.*)$/) {
 		$FROM = $1;
 		next;
@@ -69,10 +69,10 @@ sub processRepo
 		)->{'commit'};
 		my $subject = $repo . ': ' .
 			substr($commit->{'id'}, 0, 9);
-		my $text = 'Author: ' . $commit->{'author'}->{'name'} .
-			' <' . $commit->{'author'}->{'email'} . ">\n";
-		$text .= 'Committer: ' . $commit->{'committer'}->{'name'} .
-			' <' . $commit->{'committer'}->{'email'} . ">\n";
+		my $text = 'Author: ' . ($commit->{'author'}->{'name'} || 'unknown') .
+			' <' . ($commit->{'author'}->{'email'} || 'no address') . ">\n";
+		$text .= 'Committer: ' . ($commit->{'committer'}->{'name'} || 'unknown') .
+			' <' . ($commit->{'committer'}->{'email'} || 'no address') . ">\n";
 		$text .= 'Authored date: ' . $commit->{'authored_date'} . "\n";
 		$text .= 'Commited date: ' . $commit->{'authored_date'} . "\n";
 		$text .= 'Id: ' . $commit->{'id'} . "\n";
