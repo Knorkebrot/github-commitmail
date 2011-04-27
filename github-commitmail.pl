@@ -30,7 +30,6 @@ close(STATE);
 my %states;
 foreach (@statelist) {
 	my ($key, $value) = split(':', $_);
-	$value =~ s/^\s*//;
 	$value =~ s/\s*$//;
 	$states{$key} = $value;
 }
@@ -38,7 +37,7 @@ foreach (@statelist) {
 open(CONF, '<', $CONF);
 foreach (<CONF>) {
 	next if ($_ =~ /^\s*$/ || $_ =~ /^#/);	# comments and empty lines
-	if($_ =~ /^from:\s*(.*)$/) {
+	if ($_ =~ /^from:\s*(.*)$/) {
 		$FROM = $1;
 		next;
 	}
