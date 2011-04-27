@@ -42,7 +42,8 @@ foreach (<CONF>) {
 		next;
 	}
 	die "Malformed config line: " . $_ unless ($_ =~ /^([\w\/\-]+):\s*([\w\-@ .]+)$/);
-	processRepo($1, split(/\s+/, $2));
+	my @users = split(/\s+/, $2);
+	processRepo($1, \@users);
 }
 close(CONF);
 
@@ -53,14 +54,13 @@ while (my ($repo, $id) = each(%states)) {
 close(STATE);
 
 
-
 #
 # processRepo()
 #
 sub processRepo
 {
 	my $repo = shift;
-	my @users = shift;
+	my @users = @{ shift() };
 
 	foreach (reverse getCommitlist($repo, $states{$repo}, 1, $ua)) {
 		my $commit = decode_json(
