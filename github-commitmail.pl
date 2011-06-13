@@ -151,7 +151,7 @@ sub getCommitlist
 		push(@todo, $_->{'id'});
 		return @todo if (!$last);
 	}
-	return (@todo, getCommitlist($repo, $last, $page + 1));
+	return (@todo, getCommitlist($repo, $last, $page + 1, $ua));
 }
 
 #
